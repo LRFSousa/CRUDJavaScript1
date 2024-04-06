@@ -44,5 +44,32 @@ module.exports = {
             json.error = 'Campos não enviados.';
         }
         res.json(json);
+        },
+
+    alterar: async (req, res) => {
+        let json = {error:'', result: {}};
+    
+        let codigo = req.params.codigo;
+        let modelo = req.body.modelo;
+        let placa = req.body.placa;
+            
+        if(modelo && modelo && placa){
+            await carroServices.alterar(codigo, modelo, placa);
+            json.result = {
+                codigo,
+                modelo,
+                placa
+                };
+        }else{
+            json.error = 'Campos não enviados.';
         }
+        res.json(json);
+    },
+    excluir: async(req, res) => {
+        let json = {error:'', result:{}};
+
+        await carroServices.excluir(req.params.codigo);
+        res.json(json);
+
+    }
 }
